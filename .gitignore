@@ -1,0 +1,108 @@
+# ============================================================
+# Agentic RAG over Live Data - .gitignore
+# ============================================================
+
+# --- Environment & Secrets ---
+.env
+*.env.local
+*.env.*.local
+secrets/
+credentials.json
+token.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.pyc
+*.pyo
+*.pyd
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+rag/
+
+# --- Testing & Coverage ---
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
+.pytest_cache/
+nosetests.xml
+junit.xml
+
+# --- Type Checking ---
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# --- IDEs & Editors ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- Data & Logs ---
+logs/
+*.log
+data/
+*.db
+*.sqlite3
+
+# --- Jupyter ---
+.ipynb_checkpoints
+*.ipynb
+
+# --- Distribution / Packaging ---
+*.tar.gz
+*.zip
+
+# --- Qdrant & Redis local data ---
+qdrant_storage/
+redis_data/
+
+# --- RAGAS / Evaluation artifacts ---
+evaluation/results/
+evaluation/artifacts/
+
+# --- Misc ---
+.benchmarks/
+prof/

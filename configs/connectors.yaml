@@ -1,0 +1,96 @@
+# ============================================================
+# Data Connectors Configuration
+# ============================================================
+
+# ── Gmail ─────────────────────────────────────────────────────────────────────
+gmail:
+  enabled: true
+  use_mock: true   # Set to false when real credentials are available
+  # Number of messages to fetch per poll cycle
+  max_results: 50
+  # Gmail search query filter (standard Gmail search syntax)
+  search_query: "is:unread newer_than:1d"
+  # Labels to include (empty = all)
+  label_ids:
+    - INBOX
+    - IMPORTANT
+  # Fields to extract and index
+  extract_fields:
+    - subject
+    - body
+    - sender
+    - date
+    - thread_id
+  # OAuth2 scopes required
+  scopes:
+    - "https://www.googleapis.com/auth/gmail.readonly"
+
+# ── Notion ────────────────────────────────────────────────────────────────────
+notion:
+  enabled: true
+  use_mock: true
+  # Which object types to sync
+  sync_types:
+    - page
+    - database_row
+  # Max pages to fetch per sync
+  max_pages: 100
+  # Fields to extract
+  extract_fields:
+    - title
+    - content
+    - last_edited_time
+    - created_time
+    - tags
+    - url
+
+# ── Jira ──────────────────────────────────────────────────────────────────────
+jira:
+  enabled: true
+  use_mock: true
+  # Max issues to fetch per poll
+  max_results: 50
+  # JQL filter for issues to sync
+  jql_query: "updated >= -1d ORDER BY updated DESC"
+  # Issue types to include
+  issue_types:
+    - Bug
+    - Story
+    - Task
+    - Epic
+  # Fields to extract
+  extract_fields:
+    - summary
+    - description
+    - status
+    - priority
+    - assignee
+    - reporter
+    - created
+    - updated
+    - labels
+    - comments
+
+# ── Ingestion Pipeline ────────────────────────────────────────────────────────
+pipeline:
+  # Time between full sync cycles (seconds)
+  poll_interval_seconds: 60
+  # Max retries for a single connector on failure
+  max_retries: 3
+  # Retry backoff in seconds
+  retry_backoff_seconds: 10
+  # Run connectors concurrently
+  concurrent: true
+  # Batch size for Qdrant upserts
+  batch_size: 100
+
+# ── Chunking Settings ─────────────────────────────────────────────────────────
+chunking:
+  strategy: recursive   # Options: recursive, sentence, fixed
+  chunk_size: 512
+  chunk_overlap: 64
+  separators:
+    - "\n\n"
+    - "\n"
+    - ". "
+    - " "

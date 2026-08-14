@@ -1,0 +1,66 @@
+[
+  {
+    "question": "What are the open Jira tickets for the search implementation?",
+    "ground_truth": "PROJ-101 is an open ticket for implementing vector search backend with Qdrant, assigned to Alex Chen.",
+    "contexts": [
+      "[PROJ-101] Implement vector search backend with Qdrant. Status: In Progress. Assignee: Alex Chen.",
+      "Alex Chen is working on the Qdrant integration for PROJ-101."
+    ]
+  },
+  {
+    "question": "What is the status of the Redis caching ticket?",
+    "ground_truth": "PROJ-102 for setting up Redis for session caching has status Done, completed by Jordan Lee.",
+    "contexts": [
+      "[PROJ-102] Set up Redis for session caching. Status: Done. Assignee: Jordan Lee.",
+      "Jordan Lee completed Redis configuration and load tests passed."
+    ]
+  },
+  {
+    "question": "What happened during the production incident on July 26?",
+    "ground_truth": "A production incident on July 26 caused a 47-minute API latency spike due to a misconfigured database connection pool (max connections was 10 instead of 100).",
+    "contexts": [
+      "Production incident on 2026-07-26: API latency spike lasting 47 minutes. Root cause: connection pool misconfiguration.",
+      "Max connections were set to 10 instead of 100. Fixed with hotfix v2.3.1."
+    ]
+  },
+  {
+    "question": "What are the Q3 2026 product roadmap priorities?",
+    "ground_truth": "Q3 2026 priorities include: P0 - Semantic Search with Qdrant (owner: Priya, target 40% relevancy improvement), P1 - AI Recommendations (owner: Jordan), P1 - Performance Optimization (owner: Morgan).",
+    "contexts": [
+      "Q3 2026 Roadmap: Semantic Search (P0, owner Priya), AI Recommendations (P1, owner Jordan), Performance Optimization (P1, owner Morgan).",
+      "Target: Search P95 latency from 450ms to 200ms, search relevancy from 0.62 to 0.87."
+    ]
+  },
+  {
+    "question": "How should a new engineer get set up in their first week?",
+    "ground_truth": "In Week 1, new engineers should set up their environment (Python 3.12, Docker, VS Code), clone the main repository, request access to AWS/Datadog/PagerDuty, tour the codebase, and submit their first PR from a good-first-issue.",
+    "contexts": [
+      "Engineering Onboarding: Week 1 includes environment setup with Python 3.12 and Docker.",
+      "Day 3-4: Codebase tour. Day 5: Pick good-first-issue and submit first PR."
+    ]
+  },
+  {
+    "question": "What is the architecture for the notification service?",
+    "ground_truth": "The notification service uses an event-driven architecture: Producer → Kafka → Consumer Groups → Channel Adapters (SendGrid for email, Twilio for SMS, FCM for push) → Delivery.",
+    "contexts": [
+      "Notification service architecture: Producer → Kafka → Consumer Groups → Channel Adapters → Delivery.",
+      "SendGrid for email, Twilio for SMS, FCM for push. SLA: 99.9% delivery within 30 seconds."
+    ]
+  },
+  {
+    "question": "What is the P0 bug about latency regression?",
+    "ground_truth": "PROJ-104 is a P0 critical bug: P95 search API latency spiked from 180ms to 650ms after v2.3.0 due to an N+1 query problem in results enrichment. Fix: batch author metadata lookup.",
+    "contexts": [
+      "[PROJ-104] Fix P95 latency regression. Priority: Critical. Assignee: Alex Chen.",
+      "Root cause: N+1 query in results enrichment. Fix: batch author metadata with single IN query."
+    ]
+  },
+  {
+    "question": "Which key architectural decisions were made in the July 24 review?",
+    "ground_truth": "Key decisions in the July 24 architecture review: microservices for payment module, Redis for session caching (1-hour TTL), PostgreSQL over MongoDB, and Kong as the API gateway.",
+    "contexts": [
+      "Architecture Review July 24: Adopted microservices for payment module, Redis for session caching.",
+      "PostgreSQL chosen over MongoDB. API gateway: Kong selected. Next meeting: August 1, 2026."
+    ]
+  }
+]

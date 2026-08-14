@@ -1,0 +1,99 @@
+# ============================================================
+# Guardrails Configuration
+# ============================================================
+
+# ── PII Detection Settings ────────────────────────────────────────────────────
+pii:
+  # Confidence threshold above which a PII entity triggers redaction/blocking
+  threshold: 0.85
+  # Entity types to detect and redact
+  entities:
+    - PERSON
+    - EMAIL_ADDRESS
+    - PHONE_NUMBER
+    - CREDIT_CARD
+    - US_SSN
+    - US_BANK_NUMBER
+    - IP_ADDRESS
+    - URL
+    - LOCATION
+    - DATE_TIME
+  # Replacement token used in redacted output
+  replacement_token: "[REDACTED]"
+  # Block entire response if PII found in output (true = block, false = redact in-place)
+  block_on_output_pii: false
+
+# ── Prompt Injection Detection ────────────────────────────────────────────────
+injection:
+  # Set to true to block the request immediately upon detection
+  block_on_detect: true
+  # Confidence score from LLM fallback above which to treat as injection
+  llm_fallback_threshold: 0.75
+  # Static trigger phrases (case-insensitive substring match)
+  trigger_words:
+    - "ignore previous instructions"
+    - "ignore all instructions"
+    - "disregard the above"
+    - "forget everything"
+    - "override your instructions"
+    - "you are now"
+    - "act as if"
+    - "new persona"
+    - "drop all tables"
+    - "delete all records"
+    - "system prompt"
+    - "jailbreak"
+    - "DAN mode"
+    - "developer mode"
+    - "sudo mode"
+    - "bypass safety"
+    - "repeat after me"
+    - "print your instructions"
+    - "reveal your system prompt"
+    - "ignore constraints"
+    - "override"
+    - "\\n\\nHuman:"
+    - "\\n\\nAssistant:"
+    - "<|im_start|>"
+    - "<|im_end|>"
+    - "###Instruction###"
+
+# ── Grounding / Fact-Check Settings ──────────────────────────────────────────
+grounding:
+  # Strict mode: reject answers not grounded in retrieved docs
+  strict_mode: true
+  # Minimum semantic similarity score to consider a claim grounded
+  similarity_threshold: 0.70
+  # Maximum ratio of ungrounded sentences before rejection
+  max_ungrounded_ratio: 0.20
+  # Fallback message when grounding fails
+  refusal_message: >
+    I cannot provide a reliable answer because the available information does not
+    sufficiently support a confident response. Please refine your query or check
+    the source data.
+
+# ── Content Safety ────────────────────────────────────────────────────────────
+safety:
+  # Categories that will trigger output blocking
+  blocked_categories:
+    - hate_speech
+    - violence
+    - self_harm
+    - sexual_content
+    - illegal_activities
+  # Confidence threshold above which category triggers a block
+  category_threshold: 0.80
+  # Banned phrases (exact or near-match)
+  banned_phrases:
+    - "step-by-step bomb"
+    - "synthesize drugs"
+    - "how to hack"
+
+# ── Query Decomposition ───────────────────────────────────────────────────────
+decomposition:
+  # Enable automatic query decomposition for complex queries
+  enabled: true
+  # Maximum number of sub-questions to decompose into
+  max_sub_questions: 4
+  # Minimum query length (chars) before decomposition is attempted
+  min_query_length: 80

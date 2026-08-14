@@ -1,0 +1,21 @@
+# ============================================================
+# Prometheus Scrape Configuration (referenced by docker-compose)
+# ============================================================
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+scrape_configs:
+  - job_name: "agentic_rag_app"
+    static_configs:
+      - targets: ["app:8000"]
+    metrics_path: "/metrics"
+
+  - job_name: "qdrant"
+    static_configs:
+      - targets: ["qdrant:6333"]
+
+  - job_name: "redis"
+    static_configs:
+      - targets: ["redis:6379"]
