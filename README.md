@@ -1,6 +1,9 @@
 # Agentic RAG over Live Data
 
-> **Production-ready Agentic Retrieval-Augmented Generation** with live data ingestion from Gmail, Notion & Jira — powered by LangGraph, FastAPI, Qdrant, and strict Input/Output Guardrails.
+> A production-oriented GenAI system that provides grounded answers from live **Gmail, Notion, and Jira** data. It uses **LangGraph** for agentic planning, retrieval, evaluation, reflection, and generation, with **Qdrant** for semantic search and **Redis** for conversational memory.
+
+The system includes **input/output guardrails** for prompt-injection detection, PII protection, grounding validation, and content safety. It is deployed using **FastAPI and Docker**, with **Prometheus, Grafana, and RAGAS** for observability and evaluation.
+
 
 ---
 
