@@ -4,7 +4,7 @@
 
 ---
 
-## 📐 Project Architecture
+## Project Architecture
 
 ### Directory Structure
 
@@ -104,7 +104,7 @@ agentic-rag-live/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Docker & Docker Compose v2+
@@ -185,7 +185,7 @@ curl -X POST http://localhost:8000/chat \
 
 ---
 
-## 🛡️ Guardrails Pipeline
+## Guardrails Pipeline
 
 ```
 User Query
@@ -219,7 +219,7 @@ User Query
 
 ---
 
-## 🧠 Agent Graph
+## Agent Graph
 
 The LangGraph `StateGraph` implements a Plan-Retrieve-Evaluate-Reflect-Generate loop:
 
@@ -240,7 +240,7 @@ planner ──► retriever ──► evaluator
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 All guardrail thresholds are in [`configs/guardrails.yaml`](configs/guardrails.yaml):
 
@@ -265,7 +265,7 @@ grounding_strict_mode: true
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 make test              # All tests with coverage
@@ -276,7 +276,7 @@ make eval              # RAGAS evaluation pipeline
 
 ---
 
-## 🔄 Makefile Commands
+##  Makefile Commands
 
 | Command | Description |
 |---------|-------------|
@@ -294,7 +294,7 @@ make eval              # RAGAS evaluation pipeline
 
 ---
 
-## 📦 Key Dependencies
+## Key Dependencies
 
 | Package | Purpose |
 |---------|---------|
@@ -310,6 +310,6 @@ make eval              # RAGAS evaluation pipeline
 
 ---
 
-## 📄 License
+## License
 
 MIT License — see [LICENSE](LICENSE) for details.
