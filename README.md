@@ -146,7 +146,7 @@ make build && make up
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
@@ -257,7 +257,7 @@ grounding_strict_mode: true
 
 ---
 
-## 📊 Observability
+## Observability
 
 | Service | URL | Purpose |
 |---------|-----|---------|
