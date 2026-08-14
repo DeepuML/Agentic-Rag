@@ -195,25 +195,25 @@ User Query
     │
     ▼
 ┌─────────────────────────────┐
-│   INPUT GUARDRAILS           │
-│  1. Injection Detection      │  ← Regex + LLM fallback
-│  2. PII Redaction (Presidio) │  ← Replace emails/phones
-│  3. Query Decomposition      │  ← Split complex queries
+│   INPUT GUARDRAILS          │
+│  1. Injection Detection     │  ← Regex + LLM fallback
+│  2. PII Redaction (Presidio)│  ← Replace emails/phones
+│  3. Query Decomposition     │  ← Split complex queries
 └──────────────┬──────────────┘
                │
                ▼
 ┌─────────────────────────────┐
-│   AGENTIC RAG PIPELINE       │
-│  Plan → Retrieve → Evaluate  │
-│  → Reflect → Generate        │
+│   AGENTIC RAG PIPELINE      │
+│  Plan → Retrieve → Evaluate │
+│  → Reflect → Generate       │
 └──────────────┬──────────────┘
                │
                ▼
 ┌─────────────────────────────┐
-│   OUTPUT GUARDRAILS          │
-│  1. PII Leak Check           │  ← Presidio on output
-│  2. Grounding Validation     │  ← Facts vs. retrieved docs
-│  3. Content Safety Filter    │  ← Harmful content check
+│   OUTPUT GUARDRAILS         │
+│  1. PII Leak Check          │  ← Presidio on output
+│  2. Grounding Validation    │  ← Facts vs. retrieved docs
+│  3. Content Safety Filter   │  ← Harmful content check
 └──────────────┬──────────────┘
                │
                ▼
@@ -233,7 +233,7 @@ START
 planner ──► retriever ──► evaluator
                                │
                     ┌──────────┴──────────┐
-                    │ sufficient?          │ not sufficient (max 3 retries)
+                    │ sufficient?         │ not sufficient (max 3 retries)
                     ▼                     ▼
                 generator            reflector ──► retriever (retry)
                     │
