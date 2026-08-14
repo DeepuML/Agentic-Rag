@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { Send, RotateCcw, BrainCircuit, Sparkles, Shield, Clock, Layers } from 'lucide-react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { Send, RotateCcw, BrainCircuit, Sparkles, Shield, Clock, Layers, User } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 const SUGGESTIONS = [
   '📧 Summarize my unread emails from last week',
@@ -7,9 +8,6 @@ const SUGGESTIONS = [
   '📝 Show key decisions from Notion docs',
   '🔍 Find action items across all sources',
 ]
-
-const SESSION_ID = 'session_' + Math.random().toString(36).slice(2, 9)
-const USER_ID    = 'user_demo'
 
 /* ── Source chip ──────────────────────────────────────────── */
 function SourceChip({ source }) {
@@ -49,13 +47,16 @@ function GuardrailBadges({ flags }) {
 }
 
 /* ── Single message bubble ────────────────────────────────── */
-function Message({ msg }) {
+function Message({ msg, userInitials = 'U', userGradient }) {
   const isUser = msg.role === 'user'
   return (
     <div className={`msg-wrap ${isUser ? 'user' : 'assistant'}`}>
       <div className="msg-header">
-        <div className={`msg-avatar ${isUser ? 'user-av' : 'ai-av'}`}>
-          {isUser ? 'U' : <BrainCircuit size={14} color="#818cf8" />}
+        <div
+          className={`msg-avatar ${isUser ? 'user-av' : 'ai-av'}`}
+          style={isUser && userGradient ? { background: userGradient } : {}}
+        >
+          {isUser ? userInitials : <BrainCircuit size={14} color="#818cf8" />}
         </div>
         <span className="msg-sender">{isUser ? 'You' : 'Agentic RAG'}</span>
       </div>
@@ -121,6 +122,8 @@ function EmptyState({ onSuggestion }) {
 
 /* ── Main Chat Page ───────────────────────────────────────── */
 export default function ChatPage() {
+  const { user, userId, initials, avatarGradient } = useAuth()
+  const SESSION_ID = useMemo(() => 'session_' + Math.random().toString(36).slice(2, 9), [])
   const [messages, setMessages] = useState([])
   const [input, setInput]       = useState('')
   const [loading, setLoading]   = useState(false)
@@ -154,7 +157,7 @@ export default function ChatPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: USER_ID,
+          user_id: userId,
           session_id: SESSION_ID,
           query,
           include_sources: true,
@@ -211,7 +214,7 @@ export default function ChatPage() {
       await fetch('/reset', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: USER_ID, session_id: SESSION_ID }),
+        body: JSON.stringify({ user_id: userId, session_id: SESSION_ID }),
       })
       setMessages([])
       showToast('Session cleared ✓')
@@ -224,9 +227,21 @@ export default function ChatPage() {
     <div className="chat-page">
       {/* Top bar */}
       <div className="topbar">
-        <div>
-          <div className="topbar-title">💬 Chat</div>
-          <div className="topbar-sub">Session: {SESSION_ID}</div>
+        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+          <div
+            style={{
+              width:36, height:36, borderRadius:8,
+              background: avatarGradient,
+              display:'flex', alignItems:'center', justifyContent:'center',
+              fontSize:13, fontWeight:800, color:'white', flexShrink:0
+            }}
+          >
+            {initials}
+          </div>
+          <div>
+            <div className="topbar-title">Hey, {user?.displayName?.split(' ')[0]} 👋</div>
+            <div className="topbar-sub">ID: {userId} · Session: {SESSION_ID}</div>
+          </div>
         </div>
         <div className="topbar-right">
           {messages.length > 0 && (
@@ -249,7 +264,14 @@ export default function ChatPage() {
       <div className="chat-messages">
         {messages.length === 0 && !loading
           ? <EmptyState onSuggestion={sendMessage} />
-          : messages.map(msg => <Message key={msg.id} msg={msg} />)
+          : messages.map(msg => (
+            <Message
+              key={msg.id}
+              msg={msg}
+              userInitials={initials}
+              userGradient={avatarGradient}
+            />
+          ))
         }
 
         {loading && (
